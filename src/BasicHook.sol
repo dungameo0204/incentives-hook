@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {BaseHook} from "v4-periphery/src/base/hooks/BaseHook.sol";
+import {BaseHook} from "v4-periphery/src/utils/BaseHook.sol";
 import {IPoolManager} from "v4-core/interfaces/IPoolManager.sol";
 import {Hooks} from "v4-core/libraries/Hooks.sol";
 import {PoolKey} from "v4-core/types/PoolKey.sol";
@@ -35,12 +35,12 @@ contract BasicHook is BaseHook {
             });
     }
 
-    function beforeSwap(
+    function _beforeSwap(
         address,
-        PoolKey calldata key,
+        PoolKey calldata,
         IPoolManager.SwapParams calldata,
         bytes calldata
-    ) external override returns (bytes4, BeforeSwapDelta, uint24) {
+    ) internal override returns (bytes4, BeforeSwapDelta, uint24) {
         beforeSwapCount++;
         return (
             BaseHook.beforeSwap.selector,

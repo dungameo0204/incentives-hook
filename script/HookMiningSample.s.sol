@@ -64,7 +64,6 @@ contract HookMiningSample is Script {
         vm.stopBroadcast();
 
         uint160 flags = uint160(Hooks.BEFORE_SWAP_FLAG);
-
         address CREATE2_DEPLOYER = 0x4e59b44847b379578588920cA78FbF26c0B4956C;
         (address hookAddress, bytes32 salt) = HookMiner.find(
             CREATE2_DEPLOYER,

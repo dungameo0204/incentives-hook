@@ -15,7 +15,7 @@ contract V4Deployer is Script {
     function run() public {
         vm.startBroadcast();
 
-        PoolManager manager = new PoolManager();
+        PoolManager manager = new PoolManager(address(this));
         console.log("Deployed PoolManager at", address(manager));
         PoolSwapTest swapRouter = new PoolSwapTest(manager);
         console.log("Deployed PoolSwapTest at", address(swapRouter));
