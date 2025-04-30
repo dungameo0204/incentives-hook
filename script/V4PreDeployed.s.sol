@@ -13,15 +13,16 @@ import {PoolKey} from "v4-core/types/PoolKey.sol";
 import {IHooks} from "v4-core/interfaces/IHooks.sol";
 import {IPoolManager} from "v4-core/interfaces/IPoolManager.sol";
 import {Currency} from "v4-core/types/Currency.sol";
+import {SwapParams, ModifyLiquidityParams} from "v4-core/types/PoolOperation.sol";
 import "forge-std/console.sol";
 
 contract V4PreDeployed is Script {
     PoolManager manager =
-        PoolManager(0xCa6DBBe730e31fDaACaA096821199EEED5AD84aE);
+        PoolManager(0x00B036B58a818B1BC34d502D3fE730Db729e62AC);
     PoolSwapTest swapRouter =
-        PoolSwapTest(0xEc9537B6D66c14E872365AB0EAE50dF7b254D4Fc);
+        PoolSwapTest(0x5fa728C0A5cfd51BEe4B060773f50554c0C8A7AB);
     PoolModifyLiquidityTest modifyLiquidityRouter =
-        PoolModifyLiquidityTest(0x1f03f235e371202e49194F63C7096F5697848822);
+        PoolModifyLiquidityTest(0x5fa728C0A5cfd51BEe4B060773f50554c0C8A7AB);
 
     Currency token0;
     Currency token1;
@@ -68,7 +69,7 @@ contract V4PreDeployed is Script {
     function run() public {
         modifyLiquidityRouter.modifyLiquidity(
             key,
-            IPoolManager.ModifyLiquidityParams({
+            ModifyLiquidityParams({
                 tickLower: -120,
                 tickUpper: 120,
                 liquidityDelta: 10e18,

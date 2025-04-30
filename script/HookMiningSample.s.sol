@@ -17,17 +17,19 @@ import {IHooks} from "v4-core/interfaces/IHooks.sol";
 import {Hooks} from "v4-core/libraries/Hooks.sol";
 import {IPoolManager} from "v4-core/interfaces/IPoolManager.sol";
 import {Currency} from "v4-core/types/Currency.sol";
+import {SwapParams, ModifyLiquidityParams} from "v4-core/types/PoolOperation.sol";
 import {HookMiner} from "../test/HookMiner.sol";
 import {BasicHook} from "../src/BasicHook.sol";
 import "forge-std/console.sol";
 
 contract HookMiningSample is Script {
+    // Addresses from Unichain Sepolia
     PoolManager manager =
-        PoolManager(0xCa6DBBe730e31fDaACaA096821199EEED5AD84aE);
+        PoolManager(0x00B036B58a818B1BC34d502D3fE730Db729e62AC);
     PoolSwapTest swapRouter =
-        PoolSwapTest(0xEc9537B6D66c14E872365AB0EAE50dF7b254D4Fc);
+        PoolSwapTest(0x9140a78c1A137c7fF1c151EC8231272aF78a99A4);
     PoolModifyLiquidityTest modifyLiquidityRouter =
-        PoolModifyLiquidityTest(0x1f03f235e371202e49194F63C7096F5697848822);
+        PoolModifyLiquidityTest(0x5fa728C0A5cfd51BEe4B060773f50554c0C8A7AB);
 
     Currency token0;
     Currency token1;
@@ -93,7 +95,7 @@ contract HookMiningSample is Script {
         vm.startBroadcast();
         modifyLiquidityRouter.modifyLiquidity(
             key,
-            IPoolManager.ModifyLiquidityParams({
+            ModifyLiquidityParams({
                 tickLower: -120,
                 tickUpper: 120,
                 liquidityDelta: 10e18,

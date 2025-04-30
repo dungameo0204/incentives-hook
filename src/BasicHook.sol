@@ -5,7 +5,12 @@ import {BaseHook} from "v4-periphery/src/utils/BaseHook.sol";
 import {IPoolManager} from "v4-core/interfaces/IPoolManager.sol";
 import {Hooks} from "v4-core/libraries/Hooks.sol";
 import {PoolKey} from "v4-core/types/PoolKey.sol";
+import {BalanceDelta, BalanceDeltaLibrary, toBalanceDelta} from "v4-core/types/BalanceDelta.sol";
 import {BeforeSwapDelta, BeforeSwapDeltaLibrary} from "v4-core/types/BeforeSwapDelta.sol";
+import {SwapParams, ModifyLiquidityParams} from "v4-core/types/PoolOperation.sol";
+
+import "forge-std/console2.sol";
+
 contract BasicHook is BaseHook {
     uint256 public beforeSwapCount;
     constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
@@ -38,7 +43,7 @@ contract BasicHook is BaseHook {
     function _beforeSwap(
         address,
         PoolKey calldata,
-        IPoolManager.SwapParams calldata,
+        SwapParams calldata,
         bytes calldata
     ) internal override returns (bytes4, BeforeSwapDelta, uint24) {
         beforeSwapCount++;

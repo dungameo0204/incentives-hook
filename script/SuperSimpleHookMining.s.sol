@@ -14,7 +14,7 @@ import "forge-std/console.sol";
 
 contract HookMiningSample is Script {
     PoolManager manager =
-        PoolManager(0xCa6DBBe730e31fDaACaA096821199EEED5AD84aE);
+        PoolManager(0x00B036B58a818B1BC34d502D3fE730Db729e62AC);
 
     function setUp() public {
         uint160 flags = uint160(Hooks.BEFORE_SWAP_FLAG);
