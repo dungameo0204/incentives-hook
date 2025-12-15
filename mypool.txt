@@ -1,0 +1,80 @@
+Script ran successfully.
+
+== Logs ==
+  === Deploying tokens ===
+  TokenA: 0x8c50C847524531fF288Fb7bBF9882e55dA881a30
+  TokenB: 0xE18069fAac066353b8706cEEEB711aA7c4340a75
+  Token0 (sorted): 0x8c50C847524531fF288Fb7bBF9882e55dA881a30
+  Token1 (sorted): 0xE18069fAac066353b8706cEEEB711aA7c4340a75
+  Approving routers...
+  Minting tokens...
+  TokenA balance: 100000000000000000000
+  TokenB balance: 100000000000000000000
+  BrevisProof deployed at:
+  Hook we found:
+  0x5F7CcAE2A24eB9da8BAC46217c9910F3C442ffc0
+  Hook deployed at:
+  0x5F7CcAE2A24eB9da8BAC46217c9910F3C442ffc0
+  ==============================
+  PoolManager: 0xE03A1074c86CFeDd5C142C4F04F1a1536e203543
+  Hook: 0x5F7CcAE2A24eB9da8BAC46217c9910F3C442ffc0
+⠐ Sequence #1 on sepolia | Waiting for pending transactions
+
+##### sepolia
+✅  [Success] Hash: 0x673e3c4c4ae1985780900d8fcc7652fa372913de386f67e2081d3c8673503b7d
+Block: 9770962
+Paid: 0.000000046487 ETH (46487 gas * 0.001 gwei)ce6d21ad034e55d951825434a80752e9168c
+Block: 9770961
+
+##### sepolia
+✅  [Success] Hash: 0x77186ad3d3bd4bd9d0e0ffdfb61623f16a1d052605ee784a31034b22f9741310
+Block: 9770964
+Paid: 0.000000068303 ETH (68303 gas * 0.001 gwei)-------------------------------------------------] 5/13 txes (82638.8s)
+    ⠐ [00:02:17] [##############################>-----------------------------------------------] 5/13 receipts (383.0s)
+
+##### sepolia
+✅  [Success] Hash: 0xafe6bfba06981e0561b405b0a491e7181b9f3f4a60a01cd8435d8d1836368b64
+Block: 9770965
+Paid: 0.000000068303 ETH (68303 gas * 0.001 gwei)d21ad034e55d951825434a80752e9168c----------------] 3/13 txes (12145.5s)
+    ⠖ [00:02:14] [##############################>-------------------------------------------------] 5/13 txes (52140.2s)
+
+##### sepolia
+✅  [Success] Hash: 0xf66711c699a8a51e3e2f4d8900c3b48feb855676e22df261a36dc863733843e6
+Contract Address: 0xFb7F53719A61A702b52202766f46EBA0C6B1d1BB
+Block: 9770967046487 ETH (46487 gas * 0.001 gwei)--------------------------------------------------] 3/13 txes (5660.9s)
+Paid: 0.000000629128 ETH (629128 gas * 0.001 gwei)---------------------------------------------] 2/13 receipts (7059.2s)
+⠁ Sequence #1 on sepolia | Waiting for pending transactions
+
+##### sepolia
+✅  [Success] Hash: 0x4df3905a03d8b062aac301e4ab89c28026efca6781dc1ad6a1452680f03968a9
+Block: 9770968
+Paid: 0.000002925664 ETH (2925664 gas * 0.001 gwei)--------------------------------------------] 2/13 receipts (7059.2s)
+    ⠄ [Pending] 0x36338fd846a3db3f646e22e4f2b4602f46777222277df230d64cc972cddb05ef
+
+##### sepolia
+✅  [Success] Hash: 0xd9c4d2b86dc142f92f98553073e1fa6daf28b1bda1e398dc105b4ec75f1af25e
+Block: 9770971
+Paid: 0.000000043975 ETH (43975 gas * 0.001 gwei)
+
+
+##### sepolia
+✅  [Success] Hash: 0x444e16cd31019f9ef459518f588612212424bdb0adf78ecebb7d96105bbe932a
+Block: 9770973
+Paid: 0.000000148755 ETH (148755 gas * 0.001 gwei)
+
+
+##### sepolia
+✅  [Success] Hash: 0x25c96754906d602b16abb524d5c7f515a45a734c750bcc7a2fcf1b96f15c3176
+Block: 9770974
+Paid: 0.000000351857 ETH (351857 gas * 0.001 gwei)
+
+✅ Sequence #1 on sepolia | Total Paid: 0.000005942477 ETH (5942477 gas * avg 0.001 gwei)
+
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+
+Transactions saved to: /mnt/d/Astar-Training/Doan/incentiveshook2/broadcast/DeployIncentivesHook.s.sol/11155111/run-latest.json
+
+Sensitive values saved to: /mnt/d/Astar-Training/Doan/incentiveshook2/cache/DeployIncentivesHook.s.sol/11155111/run-latest.json
