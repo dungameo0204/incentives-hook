@@ -4,11 +4,9 @@ pragma solidity ^0.8.18;
 import "./Lib.sol";
 
 interface IBrevisProof {
-    function submitProof(
-        uint64 _chainId,
-        bytes calldata _proofWithPubInputs,
-        bool _withAppProof
-    ) external returns (bytes32 _requestId);
+    function submitProof(uint64 _chainId, bytes calldata _proofWithPubInputs, bool _withAppProof)
+        external
+        returns (bytes32 _requestId);
 
     function hasProof(bytes32 _requestId) external view returns (bool);
 

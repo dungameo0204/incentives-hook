@@ -4,7 +4,6 @@ pragma solidity ^0.8.18;
 import "./IBrevisProof.sol";
 
 contract MockBrevisProof is IBrevisProof {
-
     mapping(bytes32 => Brevis.ProofData) public mockOutput;
 
     function setMockOutput(bytes32 requestId, bytes32 outputCommit, bytes32 vkHash) public {
@@ -18,11 +17,10 @@ contract MockBrevisProof is IBrevisProof {
         });
     }
 
-    function submitProof(
-        uint64 _chainId,
-        bytes calldata _proofWithPubInputs,
-        bool _withAppProof
-    ) external returns (bytes32 _requestId) {
+    function submitProof(uint64 _chainId, bytes calldata _proofWithPubInputs, bool _withAppProof)
+        external
+        returns (bytes32 _requestId)
+    {
         return bytes32(0);
     }
 

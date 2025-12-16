@@ -13,18 +13,13 @@ import {BasicHook} from "../src/BasicHook.sol";
 import "forge-std/console.sol";
 
 contract HookMiningSample is Script {
-    PoolManager manager =
-        PoolManager(0x00B036B58a818B1BC34d502D3fE730Db729e62AC);
+    PoolManager manager = PoolManager(0x00B036B58a818B1BC34d502D3fE730Db729e62AC);
 
     function setUp() public {
         uint160 flags = uint160(Hooks.BEFORE_SWAP_FLAG);
         address CREATE2_DEPLOYER = 0x4e59b44847b379578588920cA78FbF26c0B4956C;
-        (address hookAddress, bytes32 salt) = HookMiner.find(
-            CREATE2_DEPLOYER,
-            flags,
-            type(BasicHook).creationCode,
-            abi.encode(address(manager))
-        );
+        (address hookAddress, bytes32 salt) =
+            HookMiner.find(CREATE2_DEPLOYER, flags, type(BasicHook).creationCode, abi.encode(address(manager)));
 
         vm.startBroadcast();
         BasicHook hook = new BasicHook{salt: salt}(manager);

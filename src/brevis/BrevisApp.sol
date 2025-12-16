@@ -10,11 +10,12 @@ abstract contract BrevisApp {
         brevisProof = _brevisProof;
     }
 
-    function validateRequest(
-        bytes32 _requestId,
-        uint64 _chainId,
-        Brevis.ExtractInfos memory _extractInfos
-    ) public view virtual returns (bool) {
+    function validateRequest(bytes32 _requestId, uint64 _chainId, Brevis.ExtractInfos memory _extractInfos)
+        public
+        view
+        virtual
+        returns (bool)
+    {
         brevisProof.validateRequest(_requestId, _chainId, _extractInfos);
         return true;
     }
@@ -25,7 +26,10 @@ abstract contract BrevisApp {
         handleProofResult(_requestId, appVkHash, _appCircuitOutput);
     }
 
-    function handleProofResult(bytes32 _requestId, bytes32 _vkHash, bytes calldata _appCircuitOutput) internal virtual {
+    function handleProofResult(bytes32 _requestId, bytes32 _vkHash, bytes calldata _appCircuitOutput)
+        internal
+        virtual
+    {
         // to be overridden by custom app
     }
 }

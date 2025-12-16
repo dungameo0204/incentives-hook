@@ -26,25 +26,12 @@ contract BasicHookTest is Test, Deployers {
         deployCodeTo("BasicHook.sol", abi.encode(manager), hookAddress);
         hook = BasicHook(hookAddress);
 
-        (key, ) = initPoolAndAddLiquidity(
-            currency0,
-            currency1,
-            hook,
-            500,
-            SQRT_PRICE_1_1
-        );
+        (key,) = initPoolAndAddLiquidity(currency0, currency1, hook, 500, SQRT_PRICE_1_1);
     }
 
     function test_removeLiqFees() public {
         modifyLiquidityRouter.modifyLiquidity(
-            key,
-            ModifyLiquidityParams({
-                tickLower: -120,
-                tickUpper: 120,
-                liquidityDelta: -9e17,
-                salt: 0
-            }),
-            ZERO_BYTES
+            key, ModifyLiquidityParams({tickLower: -120, tickUpper: 120, liquidityDelta: -9e17, salt: 0}), ZERO_BYTES
         );
     }
 }
