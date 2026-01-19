@@ -29,15 +29,15 @@ contract IncentivesHookRewardScript is Script {
     address constant SWAP_ROUTER = address(0x9B6b46e2c869aa39918Db7f52f5557FE577B6eEe);
 
     // Hook đã deploy
-    IncentivesHook hook = IncentivesHook(0x5F7CcAE2A24eB9da8BAC46217c9910F3C442ffc0);
+    IncentivesHook hook = IncentivesHook(0x7cC26017116E39251DFB307a4C089f37Ad6fffC0);
 
     address hookAddress = address(hook);
 
     // Token đã deploy từ script trước
-    Currency token0 = Currency.wrap(0x8c50C847524531fF288Fb7bBF9882e55dA881a30);
-    Currency token1 = Currency.wrap(0xE18069fAac066353b8706cEEEB711aA7c4340a75);
-    MockERC20 tokenA = MockERC20(0x8c50C847524531fF288Fb7bBF9882e55dA881a30);
-    MockERC20 tokenB = MockERC20(0xE18069fAac066353b8706cEEEB711aA7c4340a75);
+    Currency token0 = Currency.wrap(0x9D4bEf1F60B758466b85e477B22Ab3094149e9b8);
+    Currency token1 = Currency.wrap(0xb2718c298C642D85Af635868ec2474aA409DA820);
+    MockERC20 tokenA = MockERC20(0x9D4bEf1F60B758466b85e477B22Ab3094149e9b8);
+    MockERC20 tokenB = MockERC20(0xb2718c298C642D85Af635868ec2474aA409DA820);
     uint160 internal constant MIN_SQRT_PRICE = 4295128739;
     uint160 internal constant MAX_SQRT_PRICE = 1461446703485210103287273052203988822378723970342;
 
@@ -56,13 +56,13 @@ contract IncentivesHookRewardScript is Script {
 
         console.log("=== Starting mint token ===");
 
-        tokenA.mint(msg.sender, 10000000000 ether);
-        tokenB.mint(msg.sender, 10000000000 ether);
+        // tokenA.mint(msg.sender, 1000 ether);
+        // tokenB.mint(msg.sender, 1000 ether);
 
-        tokenA.approve(MODIFY_LIQUIDITY_ROUTER, 100000000 ether);
-        tokenB.approve(MODIFY_LIQUIDITY_ROUTER, 100000000 ether);
-        tokenA.approve(SWAP_ROUTER, 100000000 ether);
-        tokenB.approve(SWAP_ROUTER, 100000000 ether);
+        // tokenA.approve(MODIFY_LIQUIDITY_ROUTER, 1000 ether);
+        // tokenB.approve(MODIFY_LIQUIDITY_ROUTER, 1000 ether);
+        // tokenA.approve(SWAP_ROUTER, 1000 ether);
+        // tokenB.approve(SWAP_ROUTER, 1000 ether);
 
         console.log("TokenA balance:", tokenA.balanceOf(msg.sender));
         console.log("TokenB balance:", tokenB.balanceOf(msg.sender));
@@ -78,7 +78,7 @@ contract IncentivesHookRewardScript is Script {
         console.log("=== Adding liquidity from Lp0 ===");
         modifyLiquidityRouter.modifyLiquidity(
             key,
-            ModifyLiquidityParams({tickLower: -120, tickUpper: 120, liquidityDelta: 1000 ether, salt: 0}),
+            ModifyLiquidityParams({tickLower: -120, tickUpper: 120, liquidityDelta: 100 ether, salt: 0}),
             new bytes(0)
         );
 
@@ -87,14 +87,14 @@ contract IncentivesHookRewardScript is Script {
         console.log("=== Adding liquidity from Lp1 ===");
 
         modifyLiquidityRouter.modifyLiquidity(
-            key, ModifyLiquidityParams(activeLower, activeUpper, 1000 ether, saltlp1), new bytes(0)
+            key, ModifyLiquidityParams(activeLower, activeUpper, 100 ether, saltlp1), new bytes(0)
         );
 
         console.log("LP1 added liquidity in active range.");
 
         console.log("=== Adding liquidity from Lp2 ===");
         modifyLiquidityRouter.modifyLiquidity(
-            key, ModifyLiquidityParams(unactiveLower, unactiveUpper, 1000 ether, saltlp2), new bytes(0)
+            key, ModifyLiquidityParams(unactiveLower, unactiveUpper, 100 ether, saltlp2), new bytes(0)
         );
 
         console.log("LP2 added liquidity in unactive range.");

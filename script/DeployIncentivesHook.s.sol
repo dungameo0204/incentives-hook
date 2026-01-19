@@ -141,9 +141,9 @@ contract DeployIncentivesHook is Script {
 
         console2.log("Adding liquidity...");
 
-        modifyLiquidityRouter.modifyLiquidity(
-            key, ModifyLiquidityParams({tickLower: -120, tickUpper: 120, liquidityDelta: 10e18, salt: 0}), new bytes(0)
-        );
+        // modifyLiquidityRouter.modifyLiquidity(
+        //     key, ModifyLiquidityParams({tickLower: -120, tickUpper: 120, liquidityDelta: 10e18, salt: 0}), new bytes(0)
+        // );
 
         console2.log("Liquidity added!");
     }
