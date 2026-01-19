@@ -57,7 +57,7 @@ This project is built with **Foundry**. Ensure you have it installed.
 ### 1. Installation
 
 ```bash
-git clone [https://github.com/your-username/incentive-hook.git](https://github.com/your-username/incentive-hook.git)
+git clone [https://github.com/dungameo0204/incentives-hook](https://github.com/dungameo0204/incentives-hook)
 cd incentive-hook
 forge install
 
