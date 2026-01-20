@@ -142,23 +142,35 @@ contract IncentivesHook is BaseHook, ERC20, BrevisApp {
         return BaseHook.beforeAddLiquidity.selector;
     }
 
-    function _afterAddLiquidity(
+function _afterAddLiquidity(
         address sender,
         PoolKey calldata key,
         ModifyLiquidityParams calldata params,
         BalanceDelta delta,
         BalanceDelta feesAccrued,
-        bytes calldata hookData
+        bytes calldata hookData 
     ) internal override returns (bytes4, BalanceDelta) {
         PoolId id = key.toId();
         
-        // 1. Cập nhật Staked Liquidity
-        uint128 liquidityAdded = uint128(uint256(params.liquidityDelta));
-        stakedLiquidity[id] += liquidityAdded;
+        // 1. Nếu có thay đổi thanh khoản (delta != 0), cập nhật như bình thường
+        if (params.liquidityDelta != 0) {
+            uint128 liquidityAdded = uint128(uint256(params.liquidityDelta));
+            stakedLiquidity[id] += liquidityAdded;
+            _updateReward(key, params.tickLower, params.tickUpper, sender, params.salt, params.liquidityDelta);
+        }
 
-        // 2. Cập nhật Reward & Snapshot
-        
-        _updateReward(key, params.tickLower, params.tickUpper, sender, params.salt, params.liquidityDelta);
+        // 2. LOGIC RÚT THƯỞNG QUA HOOK DATA
+        // Nếu hookData không rỗng, ta decode xem user có muốn claim không
+        if (hookData.length > 0) {
+            bool shouldClaim = abi.decode(hookData, (bool));
+            if (shouldClaim) {
+                // Nếu delta == 0, ta cần update reward thủ công trước khi claim để đảm bảo số liệu mới nhất
+                if (params.liquidityDelta == 0) {
+                     _updateReward(key, params.tickLower, params.tickUpper, sender, params.salt, 0);
+                }
+                _claimReward(key, params.tickLower, params.tickUpper, sender, params.salt);
+            }
+        }
 
         return (BaseHook.afterAddLiquidity.selector, BalanceDelta.wrap(0));
     }
