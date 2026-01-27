@@ -121,13 +121,16 @@ contract IncentivesHook is BaseHook, ERC20, BrevisApp {
         activeTick[id] = tick;
 
         int24 zTick = tickBeforeSwap[id];
+        int24 spacing = key.tickSpacing;
         // Tick crossing logic: Update rewardGrowthOutside
         if (zTick < tick) {
-            for (int24 t = zTick; t < tick; t += key.tickSpacing) {
+            int24 startTick = (zTick / spacing) * spacing;
+            for (int24 t = startTick; t < tick; t += key.tickSpacing) {
                 ticks[id][t].rewardGrowthOutsideX128 = rewardGrowthGlobalX128[id] - ticks[id][t].rewardGrowthOutsideX128;
             }
         } else {
-            for (int24 t = tick; t < zTick; t += key.tickSpacing) {
+            int24 startTick = (zTick / spacing) * spacing;
+            for (int24 t = startTick; t > tick; t -= spacing) {
                 ticks[id][t].rewardGrowthOutsideX128 = rewardGrowthGlobalX128[id] - ticks[id][t].rewardGrowthOutsideX128;
             }
         }

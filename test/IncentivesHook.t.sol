@@ -161,6 +161,74 @@ contract IncentivesHookTest is Test, Deployers {
         assertGt(userRewardBalanceAfter, userRewardBalanceBefore, "User phai nhan duoc token thuong");
     }
 
+    function test_RewardJump_TickCrossing_Fix() public {
+    // --- 1. SETUP BAN ĐẦU ---
+    int24 tickLower = -60;
+    int24 tickUpper = 60;
+    uint128 liquidityAmount = 1000 ether;
+    
+    // Cấp quyền cho Router
+    vm.startPrank(lp1);
+    token0.approve(address(modifyLiquidityRouter), type(uint256).max);
+    token1.approve(address(modifyLiquidityRouter), type(uint256).max);
+    
+    // LP1 nạp thanh khoản khi giá đang ở 0 (In-range)
+    modifyLiquidityRouter.modifyLiquidity(
+        key,
+        ModifyLiquidityParams(tickLower, tickUpper, int256(uint256(liquidityAmount)), bytes32(0)),
+        ZERO_BYTES
+    );
+    vm.stopPrank();
+
+    // --- 2. GIAI ĐOẠN 1: TÍCH LŨY THƯỞNG BÌNH THƯỜNG ---
+    vm.warp(block.timestamp + 100); // Trôi qua 100 giây
+    
+    uint256 rewardPhase1 = hook.earned(key, tickLower, tickUpper, address(modifyLiquidityRouter), bytes32(0));
+    console.log("Reward sau 100s (In-range):", rewardPhase1);
+    // Thưởng phải xấp xỉ 100 * 1e18 (vì rate là 1 token/s)
+    assertApproxEqAbs(rewardPhase1, 100 ether, 1e15);
+
+    // --- 3. GIAI ĐOẠN 2: GIÁ TRƯỢT RA NGOÀI (CROSS TICK -60) ---
+    // Swap để đẩy giá về -90 (Nằm ngoài dải [-60, 60])
+    // true = swap token0 lấy token1 -> giá giảm
+    swapRouter.swap(key, SwapParams(true, 0.5 ether, TickMath.MIN_SQRT_PRICE + 1), 
+        PoolSwapTest.TestSettings({takeClaims: false, settleUsingBurn: false}), ZERO_BYTES);
+
+    (, int24 tickAfterSwap,,) = manager.getSlot0(key.toId());
+    console.log("Tick sau khi swap xuong:", tickAfterSwap);
+    assertTrue(tickAfterSwap < tickLower, "Gia phai nam ngoai bien duoi");
+
+    // Đợi thêm 100 giây khi giá đang ở ngoài
+    vm.warp(block.timestamp + 100);
+
+    // Thưởng lúc này KHÔNG ĐƯỢC TĂNG thêm vì đang Out-of-range
+    uint256 rewardPhase2 = hook.earned(key, tickLower, tickUpper, address(modifyLiquidityRouter), bytes32(0));
+    console.log("Reward khi dang o ngoai dai:", rewardPhase2);
+    assertApproxEqAbs(rewardPhase2, 100 ether, 1e15); 
+
+    // --- 4. GIAI ĐOẠN 3: GIÁ QUAY LẠI VÙNG (CROSS NGƯỢC LẠI TICK -60) ---
+    // Swap ngược lại để giá về 0
+    swapRouter.swap(key, SwapParams(false, 0.6 ether, TickMath.MAX_SQRT_PRICE - 1), 
+        PoolSwapTest.TestSettings({takeClaims: false, settleUsingBurn: false}), ZERO_BYTES);
+
+    (, int24 tickFinal,,) = manager.getSlot0(key.toId());
+    console.log("Tick sau khi quay lai:", tickFinal);
+    assertTrue(tickFinal > tickLower && tickFinal < tickUpper, "Gia phai quay lai trong vung");
+
+    // --- 5. KIỂM TRA CHỐT HẠ (PHÒNG CHỐNG NHẢY SỐ) ---
+    uint256 rewardFinal = hook.earned(key, tickLower, tickUpper, address(modifyLiquidityRouter), bytes32(0));
+    console.log("-------------------------------------------");
+    console.log("THUONG CUOI CUNG NHAN DUOC: ", rewardFinal);
+    console.log("-------------------------------------------");
+
+    // NẾU CODE SAI (Lỗi Underflow): rewardFinal sẽ vọt lên 163,663e18 hoặc cực lớn
+    // NẾU CODE ĐÚNG: rewardFinal chỉ loanh quanh 100 ether (do 100s ở ngoài không có thưởng)
+    assertLt(rewardFinal, 110e18, "LOI CHI MANG: Thuong bi nhay so (Underflow detected)!");
+    uint256 totalL = hook.stakedLiquidity(key.toId());
+    uint256 expected = (100 ether * uint256(liquidityAmount)) / uint256(totalL);
+    assertApproxEqAbs(rewardFinal, expected, 1e15);
+}
+
     function test_RewardDebt_Fix() public {
         // --- CẤU HÌNH ---
         int24 tickLower = -60;

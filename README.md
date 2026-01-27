@@ -14,7 +14,7 @@ This project implements a **Liquidity Mining** mechanism directly on-chain using
 ## 🚀 Live Demo
 
 Interact with the Hook via the frontend interface:
-### [🌐 https://frontendincentivehook.vercel.app](https://frontendincentivehook.vercel.app/)
+### [🌐 https://frontend-hook.vercel.app/](https://frontend-hook.vercel.app/)
 
 ---
 
