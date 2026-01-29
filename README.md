@@ -45,7 +45,7 @@ The system consists of the following components interaction:
 
 | Contract | Address | Description |
 | :--- | :--- | :--- |
-| **IncentiveHook** | `0x3db1d799191009c27a88D5Ea3C34EaCcec41BFc0` | The main logic & Reward Token (SC) |
+| **IncentiveHook** | `0x854A9998d5d38bF6e158923Ef466bF3407D17fc0` | The main logic & Reward Token (SC) |
 | **Pool Reader** | `0xaf60b5ad63380f6998dadfc6175a3baaccf2b682` | Helper for fetching Tick & Price |
 
 ---
